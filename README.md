@@ -7,7 +7,7 @@ You'll be challenged to unravel the mysteries of your becoming a bard in each pl
 Not only will you find a new path forward on each journey, but as you progress you will notice the world changing around you.
 
 ## Progression
-The first step on your journey is discovering a record. From there, secrets will be revealed to you, such as how to craft the book that will guide you through the mod.
+The first step on your journey is discovering a record. From there, secrets will be revealed to you, such as how to obtain the book used to begin the mod.
 
 This book and the vanilla advancements system provides a method by which to find hints on progression and as a lexicon for all information you have uncovered.
 
