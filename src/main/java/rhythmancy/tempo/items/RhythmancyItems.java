@@ -12,9 +12,14 @@ import net.minecraft.util.Identifier;
 
 public class RhythmancyItems {
     public static final Item TRIANGLE = registerItem("triangle", new Item(new FabricItemSettings()));
+    public static final Item GUIItem = registerItem("guiitem", new Item(new FabricItemSettings()));
 
     private static void addItemsToIngredientItemGroup(FabricItemGroupEntries entries) {
         entries.add(TRIANGLE);
+    }
+
+    private static void addItemsToFunctionalItemGroup(FabricItemGroupEntries entries) {
+        entries.add(GUIItem);
     }
 
     private static Item registerItem(String name, Item item) {
@@ -25,5 +30,6 @@ public class RhythmancyItems {
         Rhythmancy.LOGGER.info("Registering Rhythmancy Items");
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((RhythmancyItems::addItemsToIngredientItemGroup));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register((RhythmancyItems::addItemsToFunctionalItemGroup));
     }
 }
