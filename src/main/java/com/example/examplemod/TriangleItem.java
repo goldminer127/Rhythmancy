@@ -1,5 +1,6 @@
 package com.example.examplemod;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -8,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import org.jetbrains.annotations.NotNull;
 
 public class TriangleItem extends Item{
     public TriangleItem(Properties properties) {
@@ -15,17 +17,10 @@ public class TriangleItem extends Item{
     }
 
     @Override
-    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        if(context.getLevel().isClientSide()){
-            BlockPos pos = context.getClickedPos();
-            Player player = context.getPlayer();
-
-            String s = "";
-            s = "Player: " + player.toString() + ", position:" + pos.toString();
-
-            MutableComponent text = Component.literal("Player: " + player.toString() + ", position:" + pos);
-            player.sendSystemMessage(text);
-        }
-        return super.onItemUseFirst(stack, context);
+    public @NotNull InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
+        MutableComponent text = Component.literal((Minecraft.getInstance().player.getLookAngle()).toString());
+        player.sendSystemMessage(text);
+        return super.useOn(context);
     }
 }
