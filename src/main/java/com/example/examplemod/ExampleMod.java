@@ -46,7 +46,7 @@ public class ExampleMod
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     // Creates a new Block with the id "examplemod:example_block", combining the namespace and path
-    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_blockkk", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     // Creates a new BlockItem with the id "examplemod:example_block", combining the namespace and path
     public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
 
@@ -54,12 +54,17 @@ public class ExampleMod
     public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder()
             .alwaysEat().nutrition(1).saturationMod(2f).build()));
 
+    public static final DeferredItem<Item> TRIANGLE = ITEMS.registerSimpleItem("triangle", new Item.Properties());
+    // public static final DeferredItem<Item> TRIANGLE = ITEMS.register("triangle", () -> new );
+
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                output.accept(EXAMPLE_BLOCK_ITEM.get());
+                output.accept(TRIANGLE.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
