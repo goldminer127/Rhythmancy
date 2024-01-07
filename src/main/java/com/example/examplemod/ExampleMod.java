@@ -59,6 +59,7 @@ public class ExampleMod
     // public static final DeferredItem<Item> TRIANGLE = ITEMS.register("triangle", () -> new ExampleMo);
 
     public static final DeferredItem<Item> TRIANGLE = ITEMS.register("triangle", () -> new TriangleItem(new Item.Properties()));
+    public static final DeferredItem<Item> ANGLEREADER = ITEMS.register("anglereader", () -> new AngleReaderItem(new Item.Properties()));
     // public static final RegistryObject<Item> TRIANGLE = ITEMS.register("triangle", () -> new TriangleItem(new Item.Properties()));
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
@@ -69,6 +70,7 @@ public class ExampleMod
                 // output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 // output.accept(EXAMPLE_BLOCK_ITEM.get());
                 output.accept(TRIANGLE.get());
+                output.accept(ANGLEREADER.get());
             }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -111,8 +113,10 @@ public class ExampleMod
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(TRIANGLE);
+            event.accept(ANGLEREADER);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

@@ -1,3 +1,4 @@
 {
-    "item.examplemod.triangle":"Triangle"
+    "item.examplemod.triangle":"Triangle",
+    "item.examplemod.angleReader":"AngleReader"
 }
