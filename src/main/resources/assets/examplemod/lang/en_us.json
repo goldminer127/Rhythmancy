@@ -1,3 +1,4 @@
 {
-    "item.examplemod.triangle":"Triangle"
+    "item.examplemod.triangle":"Triangle",
+    "block.examplemod.head_removal_block": "Head Removal Block"
 }

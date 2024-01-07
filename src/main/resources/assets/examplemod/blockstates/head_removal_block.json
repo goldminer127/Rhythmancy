@@ -1,0 +1,16 @@
+{
+  "variants":{
+    "facing=north": {
+      "model": "examplemod:block/head_removal_block"
+    },
+    "facing=east": {
+      "model": "examplemod:block/head_removal_block", "y": 90
+    },
+    "facing=south": {
+      "model": "examplemod:block/head_removal_block", "y": 180
+    },
+    "facing=west": {
+      "model": "examplemod:block/head_removal_block", "y": 270
+    }
+  }
+}

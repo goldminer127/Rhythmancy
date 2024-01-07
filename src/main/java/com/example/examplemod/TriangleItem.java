@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import org.jetbrains.annotations.NotNull;
 
-public class TriangleItem extends Item{
+public class TriangleItem extends Item {
     public TriangleItem(Properties properties) {
         super(properties);
     }
