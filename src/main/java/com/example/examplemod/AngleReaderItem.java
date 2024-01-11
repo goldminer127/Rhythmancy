@@ -41,7 +41,8 @@ public class AngleReaderItem extends Item
         if(entity instanceof Player)
         {
             var endAngle = entity.getLookAngle();
-            entity.sendSystemMessage(Component.literal(getDirection(_initialAngle, endAngle).toString()));
+            //entity.sendSystemMessage(Component.literal(getDirection(_initialAngle, endAngle).toString()));
+            entity.sendSystemMessage(Component.literal(Integer.toString(getPitchStep(endAngle))));
         }
     }
     @Override
@@ -54,13 +55,20 @@ public class AngleReaderItem extends Item
         double yDist = initial.y - end.y;
         double horizontalDirection = initial.cross(end).y;
 
-        if(Math.abs(yDist) < 0.30 && horizontalDirection > 0.0)
+        if(Math.abs(yDist) < 0.15 && horizontalDirection > 0.0)
             return Direction.Left;
-        else if(Math.abs(yDist) < 0.30 && horizontalDirection < 0.0)
+        else if(Math.abs(yDist) < 0.15 && horizontalDirection < 0.0)
             return Direction.Right;
         if(yDist < 0)
             return Direction.Up;
         else
             return Direction.Down;
+    }
+    //Maybe use start angle and adjust the pitch accept range after? so if start y is 0, down pitch range would be steps of 0.12 both directions, but if you start at -20 then down steps are 10 and high steps are 15
+    private int getPitchStep(Vec3 end)
+    {
+        LOGGER.info(end.toString());
+        int direction = (end.y > 0) ? 1 : -1;
+        return (int)Math.floor(Math.abs(end.y / 0.15)) * direction;
     }
 }
