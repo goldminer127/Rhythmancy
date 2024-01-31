@@ -64,7 +64,7 @@ public class ModRecipes implements Recipe<SimpleContainer> {
             public static final String ID = "get_triangle";
     }
 
-    /*
+
     public static class Serializer implements RecipeSerializer<ModRecipes> {
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID = new ResourceLocation(ExampleMod.MODID, "get_triangle");
@@ -98,5 +98,5 @@ public class ModRecipes implements Recipe<SimpleContainer> {
 
         }
     }
-     */
+
 }
