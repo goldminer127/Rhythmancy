@@ -1,13 +1,10 @@
 package com.example.examplemod;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -26,12 +23,15 @@ public class ModRecipes implements Recipe<SimpleContainer> {
 
     @Override
     public boolean matches(SimpleContainer simpleContainer, Level level) {
-        return false;
+        if(level.isClientSide()) {
+            return false;
+        }
+        return recipeItem.get(0).test(simpleContainer.getItem(0));
     }
 
     @Override
     public ItemStack assemble(SimpleContainer simpleContainer, RegistryAccess registryAccess) {
-        return output;
+        return output.copy();
     }
 
     @Override
@@ -59,44 +59,44 @@ public class ModRecipes implements Recipe<SimpleContainer> {
     }
 
     public static class Type implements RecipeType<ModRecipes> {
-        private Type(){}
-            public static final Type INSTANCE = new Type();
-            public static final String ID = "get_triangle";
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "get_triangle";
     }
 
-    /*
     public static class Serializer implements RecipeSerializer<ModRecipes> {
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID = new ResourceLocation(ExampleMod.MODID, "get_triangle");
-
-
-        public ModRecipes fromJSON(ResourceLocation id, JsonObject json) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-
-            JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
-
-            for(int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
-            }
-
-            return new ModRecipes(id, output, inputs);
-        }
 
         @Override
         public Codec<ModRecipes> codec() {
             return null;
         }
 
-        @Override
-        public ModRecipes fromNetwork(FriendlyByteBuf friendlyByteBuf) {
+        /*
+        public ModRecipes fromJson(){
             return null;
         }
+        */
 
         @Override
-        public void toNetwork(FriendlyByteBuf friendlyByteBuf, ModRecipes modRecipes) {
+        public ModRecipes fromNetwork(FriendlyByteBuf buffer) {
+            NonNullList<Ingredient> inputs = NonNullList.withSize(buffer.readInt(), Ingredient.EMPTY);
 
+            for(int i = 0; i < inputs.size(); i++){
+                inputs.set(i, Ingredient.fromNetwork(buffer));
+            }
+            ItemStack output = buffer.readItem();
+            return new ModRecipes(ID, output, inputs);
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buffer, ModRecipes recipe) {
+            buffer.writeInt(recipe.recipeItem.size());
+
+            for(Ingredient ingredient: recipe.getIngredients()){
+                ingredient.toNetwork(buffer);
+            }
+            // buffer.writeItemStack(); // seems to also not work
         }
     }
-     */
 }
