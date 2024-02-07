@@ -50,7 +50,7 @@ public class ModRecipes implements Recipe<SimpleContainer> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return null;
+        return Serializer.INSTANCE;
     }
 
     @Override
@@ -67,22 +67,17 @@ public class ModRecipes implements Recipe<SimpleContainer> {
         public static final Serializer INSTANCE = new Serializer();
         public static final ResourceLocation ID = new ResourceLocation(ExampleMod.MODID, "get_triangle");
 
+
         @Override
         public Codec<ModRecipes> codec() {
             return null;
         }
 
-        /*
-        public ModRecipes fromJson(){
-            return null;
-        }
-        */
-
         @Override
         public ModRecipes fromNetwork(FriendlyByteBuf buffer) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buffer.readInt(), Ingredient.EMPTY);
 
-            for(int i = 0; i < inputs.size(); i++){
+            for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromNetwork(buffer));
             }
             ItemStack output = buffer.readItem();
@@ -93,10 +88,10 @@ public class ModRecipes implements Recipe<SimpleContainer> {
         public void toNetwork(FriendlyByteBuf buffer, ModRecipes recipe) {
             buffer.writeInt(recipe.recipeItem.size());
 
-            for(Ingredient ingredient: recipe.getIngredients()){
+            for (Ingredient ingredient : recipe.recipeItem) {
                 ingredient.toNetwork(buffer);
             }
-            // buffer.writeItemStack(); // seems to also not work
+            buffer.writeItem(recipe.output);
         }
     }
 }
